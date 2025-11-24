@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بنك كيمياء - التعليم المتطور</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --easy: #2ecc71;
+            --medium: #f39c12;
+            --hard: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* التصميم الشريطي */
+        nav {
+            background: rgba(26, 42, 108, 0.95);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            right: 0;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* قسم الترحيب */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s, background 0.3s;
+            animation: fadeInUp 1s ease 0.6s both;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            background: #c0392b;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+        }
+
+        .cta-button.secondary {
+            background: var(--secondary);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .cta-button.secondary:hover {
+            background: #2980b9;
+        }
+
+        /* الأقسام */
+        .section {
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 50px 0;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--light);
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        /* بطاقات الخدمات */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            margin-bottom: 1.5rem;
+            color: rgba(236, 240, 241, 0.8);
+        }
+
+        /* بطاقات المستويات */
+        .level-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .level-card.easy {
+            border-top: 5px solid var(--easy);
+        }
+
+        .level-card.medium {
+            border-top: 5px solid var(--medium);
+        }
+
+        .level-card.hard {
+            border-top: 5px solid var(--hard);
+        }
+
+        .level-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .level-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .level-desc {
+            color: rgba(236, 240, 241, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        /* التذييل */
+        footer {
+            background: var(--dark);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-credit {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(236, 240, 241, 0.7);
+        }
+
+        /* الرسوم المتحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* تأثيرات الخلفية */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+            }
+        }
+
+        /* التجاوب */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* أنماط خاصة للأسئلة */
+        .question-container {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .option.correct {
+            background: rgba(46, 204, 113, 0.3);
+            border: 1px solid var(--easy);
+        }
+
+        .option.incorrect {
+            background: rgba(231, 76, 60, 0.3);
+            border: 1px solid var(--hard);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid var(--easy);
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid var(--hard);
+            display: block;
+        }
+
+        /* شاشة الاختبار */
+        .test-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .close-test {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* اختيار الوقت */
+        .time-selection {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .time-option {
+            padding: 15px 30px;
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .time-option:hover {
+            border-color: var(--secondary);
+        }
+
+        .time-option.selected {
+            border-color: var(--accent);
+            background: rgba(231, 76, 60, 0.2);
+        }
+
+        /* شاشة النتائج */
+        .results-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            padding: 2rem;
+            overflow-y: auto;
+            text-align: center;
+        }
+
+        .results-content {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 2rem auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .score {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            color: var(--secondary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--secondary);
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <!-- تأثيرات الخلفية -->
+    <div class="floating-elements">
+        <div class="floating-element" style="width: 100px; height: 100px; top: 10%; right: 10%; animation-delay: 0s;"></div>
+        <div class="floating-element" style="width: 150px; height: 150px; top: 20%; left: 5%; animation-delay: 2s;"></div>
+        <div class="floating-element" style="width: 80px; height: 80px; bottom: 20%; right: 20%; animation-delay: 4s;"></div>
+        <div class="floating-element" style="width: 120px; height: 120px; bottom: 10%; left: 10%; animation-delay: 6s;"></div>
+    </div>
+
+    <!-- الشريط العلوي -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-flask"></i> بنك كيمياء
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#chapters">الفصول</a></li>
+                <li><a href="#levels">المستويات</a></li>
+                <li><a href="#about">عن الموقع</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- الصفحة الترحيبية -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>مرحباً بك في عالم الكيمياء!</h1>
+            <p>اختباراتنا صممت لتختبر معلوماتك، تنمي مهاراتك، وتجعلك تكتشف أسرار العناصر والتفاعلات. استعد للتحدي وابدأ رحلتك العلمية الآن!</p>
+            <a href="#chapters" class="cta-button">ابدأ الاختبارات</a>
+        </div>
+    </section>
+
+    <!-- قسم الفصول -->
+    <section id="chapters" class="section">
+        <div class="container">
+            <h2 class="section-title">اختر الفصل الدراسي</h2>
+            <div class="services-grid">
+                <div class="service-card" data-chapter="1">
+                    <div class="service-icon">🧪</div>
+                    <h3>الفصل الأول: أساسيات الكيمياء</h3>
+                    <p>المادة وخصائصها، الحالات الفيزيائية، التغيرات الكيميائية والفيزيائية</p>
+                    <button class="cta-button start-chapter" data-chapter="1">ابدأ الفصل الأول</button>
+                </div>
+                <div class="service-card" data-chapter="2">
+                    <div class="service-icon">⚗️</div>
+                    <h3>الفصل الثاني: الذرة والجدول الدوري</h3>
+                    <p>النماذج الذرية، النظائر، الجدول الدوري وتصنيف العناصر</p>
+                    <button class="cta-button start-chapter" data-chapter="2">ابدأ الفصل الثاني</button>
+                </div>
+                <div class="service-card" data-chapter="3">
+                    <div class="service-icon">🔬</div>
+                    <h3>الفصل الثالث: الروابط الكيميائية</h3>
+                    <p>الروبات الأيونية، التساهمية، الفلزية، والأشكال الجزيئية</p>
+                    <button class="cta-button start-chapter" data-chapter="3">ابدأ الفصل الثالث</button>
+                </div>
+                <div class="service-card" data-chapter="4">
+                    <div class="service-icon">🌡️</div>
+                    <h3>الفصل الرابع: حالات المادة</h3>
+                    <p>الخواص الفيزيائية والكيميائية، المخاليط والمركبات</p>
+                    <button class="cta-button start-chapter" data-chapter="4">ابدأ الفصل الرابع</button>
+                </div>
+                <div class="service-card" data-chapter="5">
+                    <div class="service-icon">⚛️</div>
+                    <h3>الفصل الخامس: التركيب الذري</h3>
+                    <p>الإلكترونات، المدارات، الأطياف الذرية، التوزيع الإلكتروني</p>
+                    <button class="cta-button start-chapter" data-chapter="5">ابدأ الفصل الخامس</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم اختيار مستوى الصعوبة -->
+    <section id="levels" class="section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">اختر مستوى الصعوبة</h2>
+            <div class="services-grid">
+                <div class="level-card easy" data-level="easy">
+                    <div class="level-icon">🟢</div>
+                    <h3 class="level-title">المستوى السهل</h3>
+                    <p class="level-desc">(تذكر - فهم) - مناسب للمبتدئين</p>
+                    <p>أسئلة تركز على المفاهيم الأساسية والاستدعاء المباشر للمعلومات</p>
+                    <button class="cta-button select-level" data-level="easy">اختر المستوى السهل</button>
+                </div>
+                <div class="level-card medium" data-level="medium">
+                    <div class="level-icon">🟠</div>
+                    <h3 class="level-title">المستوى المتوسط</h3>
+                    <p class="level-desc">(تحليل - تطبيق) - مناسب للمتوسطين</p>
+                    <p>أسئلة تتطلب تحليل العلاقات وتطبيق المعرفة في مواقف جديدة</p>
+                    <button class="cta-button select-level" data-level="medium">اختر المستوى المتوسط</button>
+                </div>
+                <div class="level-card hard" data-level="hard">
+                    <div class="level-icon">🔴</div>
+                    <h3 class="level-title">المستوى الصعب</h3>
+                    <p class="level-desc">(تحليل عميق - تقييم - إبداع) - مناسب للمتقدمين</p>
+                    <p>أسئلة تتطلب تفكيرًا نقديًا وتقييمًا للمعلومات وإبداعًا في الحلول</p>
+                    <button class="cta-button select-level" data-level="hard">اختر المستوى الصعب</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- اختيار الوقت -->
+    <section id="time-selection" class="section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">اختر مدة الاختبار</h2>
+            <div class="time-selection">
+                <div class="time-option" data-time="20">
+                    <h3>20 دقيقة</h3>
+                    <p>اختبار سريع</p>
+                </div>
+                <div class="time-option" data-time="40">
+                    <h3>40 دقيقة</h3>
+                    <p>اختبار متوسط</p>
+                </div>
+                <div class="time-option" data-time="50">
+                    <h3>50 دقيقة</h3>
+                    <p>اختبار شامل</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="cta-button start-test">بدء الاختبار</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- شاشة الاختبار -->
+    <div class="test-screen" id="test-screen">
+        <div class="container">
+            <div class="test-header">
+                <div class="timer" id="timer">20:00</div>
+                <h2 id="test-title">اختبار الكيمياء</h2>
+                <button class="close-test" onclick="endTest()">إنهاء الاختبار</button>
+            </div>
+            
+            <div id="questions-container">
+                <!-- الأسئلة ستظهر هنا -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="cta-button" onclick="submitTest()">تسليم الإجابات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة النتائج -->
+    <div class="results-screen" id="results-screen">
+        <div class="container">
+            <div class="results-content">
+                <h2>نتيجة الاختبار</h2>
+                <div class="score" id="final-score">0/0</div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar" style="width: 0%"></div>
+                </div>
+                <p id="result-message"></p>
+                <button class="cta-button" onclick="closeResults()">العودة للرئيسية</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- التذييل -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2024 بنك كيمياء - جميع الحقوق محفوظة</p>
+                <p>منصة التعليم الكيميائي المتطور</p>
+                <div class="footer-credit">
+                    تم إنشاء بنك الأسئلة بواسطة الطالب حمد السعدان وبإشراف الأستاذ عبدالله حمدي
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات التطبيق
+        let currentChapter = null;
+        let currentLevel = null;
+        let selectedTime = 20;
+        let timerInterval = null;
+        let timeLeft = 0;
+        let userAnswers = {};
+        let currentQuestions = [];
+
+        // بيانات الأسئلة الكاملة
+        const questionsDatabase = {
+            1: { // الفصل الأول: أساسيات الكيمياء
+                easy: [
+                    { id: 1, question: "علم الكيمياء هو علم يدرس:", options: ["الفضاء", "تركيب المادة وتغيراتها", "النباتات"], correct: 1 },
+                    { id: 2, question: "المادة الكيميائية تمتاز بأنها:", options: ["ليس لها تركيب", "لها تركيب محدد وثابت", "تتغير كل ثانية"], correct: 1 },
+                    { id: 3, question: "طبقة الأوزون توجد في:", options: ["التروبوسفير", "الستراتوسفير", "الميزوسفير"], correct: 1 },
+                    { id: 4, question: "الأوزون يحمي الأرض من:", options: ["الأشعة تحت الحمراء", "الأشعة فوق البنفسجية UVB", "الضوء المرئي"], correct: 1 },
+                    { id: 5, question: "وحدة قياس الأوزون هي:", options: ["جول", "دوبسون", "نيوتن"], correct: 1 },
+                    { id: 6, question: "مركبات CFC تسمى:", options: ["مركبات عضوية", "كلوروفلوروكربونات", "كربوهيدرات"], correct: 1 },
+                    { id: 7, question: "تكون الأوزون أعلى خط الاستواء بسبب:", options: ["انخفاض الحرارة", "شدة الإشعاع الشمسي", "قلة الأكسجين"], correct: 1 },
+                    { id: 8, question: "تكوّن الثقب فوق القارة القطبية بسبب:", options: ["دفء الجو", "برودة الجو الشديدة", "قرب الشمس"], correct: 1 },
+                    { id: 9, question: "الكتلة تختلف عن الوزن لأن الوزن يعتمد على:", options: ["الحجم", "الجاذبية", "اللون"], correct: 1 },
+                    { id: 10, question: "أحد فروع الكيمياء هو:", options: ["الكيمياء الحيوية", "علم الجغرافيا", "علم البحار"], correct: 0 }
+                ],
+                medium: [
+                    { id: 11, question: "سبب استخدام CFC سابقًا هو:", options: ["أنها سامة", "مستقرة وغير قابلة للاشتعال", "رخيصة جدًا فقط"], correct: 1 },
+                    { id: 12, question: "سبب خطورتها هو:", options: ["احتواؤها على الهيدروجين", "انطلاق ذرات الكلور عند تفككها", "تفاعلها مع الماء"], correct: 1 },
+                    { id: 13, question: "ثبات الأوزون رغم تكوينه وتفككه يدل على:", options: ["نظام غير متزن", "تفاعل متزن", "تفاعل لحظي"], correct: 1 },
+                    { id: 14, question: "انخفاض الأوزون يؤدي إلى:", options: ["انخفاض الأشعة", "زيادة الأشعة UVB", "تكون الضباب"], correct: 1 },
+                    { id: 15, question: "الملاحظة في التجربة تعني:", options: ["تحليل البيانات", "تسجيل ما يحدث بالحواس", "كتابة الاستنتاج"], correct: 1 }
+                ],
+                hard: [
+                    { id: 16, question: "ارتفاع UVB يؤثر على السلسلة الغذائية لأنه:", options: ["يزيد النباتات", "يضر العوالق البحرية", "يزيد الغلاف الجوي"], correct: 1 },
+                    { id: 17, question: "تؤدي برودة القطب إلى تكوّن:", options: ["غيوم جليدية تنشط الكلور", "غازات خاملة", "بخار ماء كثيف"], correct: 0 },
+                    { id: 18, question: "يُعد فقدان الأوزون خطرًا على الحياة لأنه يسمح بـ:", options: ["مرور الحرارة", "مرور الأشعة الضارة", "زيادة الضغط"], correct: 1 },
+                    { id: 19, question: "يفسر العلماء ثبات نسب الأوزون بأنه:", options: ["تفاعل أحادي", "تفاعل ضوئي متزن", "تفاعل غير مستقر"], correct: 1 },
+                    { id: 20, question: "التغير الكيميائي يتميز بأنه:", options: ["ينتج مادة جديدة", "يغير الشكل فقط", "لا يتطلب طاقة"], correct: 0 }
+                ]
+            },
+            2: { // الفصل الثاني: الذرة والجدول الدوري
+                easy: [
+                    { id: 21, question: "الجدول الدوري يرتب العناصر حسب:", options: ["العدد الكتلي", "العدد الذري", "عدد النظائر"], correct: 1 },
+                    { id: 22, question: "الدورة في الجدول الدوري تمثل:", options: ["صفًا أفقيًا", "عمودًا", "مجموعة عناصر متشابهة"], correct: 0 },
+                    { id: 23, question: "المجموعة في الجدول الدوري تمثل:", options: ["صفًا", "عمودًا", "عنصرين فقط"], correct: 1 },
+                    { id: 24, question: "عناصر المجموعة الواحدة تتشابه في:", options: ["عدد البروتونات", "عدد إلكترونات التكافؤ", "عدد النيوترونات"], correct: 1 },
+                    { id: 25, question: "الفلزات تقع في:", options: ["اليسار", "اليمين", "الوسط فقط"], correct: 0 }
+                ],
+                medium: [
+                    { id: 26, question: "الفرق في الكهروسالبية بين Na و Cl يدل على تكوّن رابطة:", options: ["تساهمية", "أيونية", "فلزية"], correct: 1 },
+                    { id: 27, question: "إذا كان نصف قطر العنصر A أكبر من B، فهذا يعني أن:", options: ["A في أعلى الجدول", "A في أسفل الجدول", "A في يمين الجدول"], correct: 1 },
+                    { id: 28, question: "عند الانتقال من اليسار إلى اليمين في دورة واحدة، نصف القطر:", options: ["يزداد", "يقل", "يبقى ثابت"], correct: 1 },
+                    { id: 29, question: "عند الانتقال لأسفل مجموعة واحدة، نصف القطر:", options: ["يقل", "يزداد", "لا يتغير"], correct: 1 },
+                    { id: 30, question: "سبب تناقص نصف القطر عبر الدورة هو:", options: ["زيادة مستوى الطاقة", "زيادة قوة جذب النواة", "تقليل الإلكترونات"], correct: 1 }
+                ],
+                hard: [
+                    { id: 31, question: "تفسير قوة الرابطة الأيونية يعتمد على علاقة طردية بين:", options: ["الشحنة والمسافة", "الكتلة والمسافة", "الكتلة والسرعة"], correct: 0 },
+                    { id: 32, question: "تزداد قوة الرابطة التساهمية كلما كان طول الرابطة:", options: ["أكبر", "أصغر", "ثابتًا"], correct: 1 },
+                    { id: 33, question: "في سلسلة هالوجينات، تزداد الكهروسالبية باتجاه:", options: ["الأعلى", "الأسفل", "اليسار"], correct: 0 },
+                    { id: 34, question: "الفرق الكبير في الكهروسالبية يؤدي إلى:", options: ["رابطة تساهمية", "رابطة أيونية", "رابطة فلزية"], correct: 1 },
+                    { id: 35, question: "سبب انحناء جزيء SO₂ هو:", options: ["اشتراك إلكتروني ضعيف", "وجود زوج غير رابط", "قطبية منخفضة"], correct: 1 }
+                ]
+            },
+            3: { // الفصل الثالث: الروابط الكيميائية
+                easy: [
+                    { id: 36, question: "الرابطة الأيونية تنتج من:", options: ["مشاركة إلكترونات", "انتقال إلكترون", "اندماج أنوية"], correct: 1 },
+                    { id: 37, question: "الرابطة التساهمية تنتج من:", options: ["مشاركة إلكترونات", "انتقال إلكترونات", "فقد بروتون"], correct: 0 },
+                    { id: 38, question: "جزيء H₂ يحتوي على رابطة:", options: ["أيونية", "تساهمية أحادية", "ثلاثية"], correct: 1 },
+                    { id: 39, question: "جزيء N₂ يحتوي على رابطة:", options: ["أحادية", "ثنائية", "ثلاثية"], correct: 2 },
+                    { id: 40, question: "جزيء O₂ يحتوي على رابطة:", options: ["أحادية", "ثنائية", "ثلاثية"], correct: 1 }
+                ],
+                medium: [
+                    { id: 41, question: "الشكل الهندسي لجزيء NH₃ هو:", options: ["خطي", "هرمي", "رباعي"], correct: 1 },
+                    { id: 42, question: "السبب في أن H₂O منحني هو وجود:", options: ["إلكترونات قليلة", "زوجين غير رابطين", "روابط أيونية"], correct: 1 },
+                    { id: 43, question: "جزيء CH₄ يمتلك شكلًا:", options: ["هرمي", "رباعي السطوح", "منحني"], correct: 1 },
+                    { id: 44, question: "في الرابطة التساهمية القطبية الإلكترونات تكون:", options: ["مشتركة بالتساوي", "أقرب لذرة أكثر سالبية", "ليست مشتركة"], correct: 1 },
+                    { id: 45, question: "المركب MgCl₂ يتكون من:", options: ["Mg⁺ و Cl⁻", "Mg²⁺ و Cl⁻", "Mg³⁺ و Cl²⁻"], correct: 1 }
+                ],
+                hard: [
+                    { id: 46, question: "المركب HF يمتلك روابط هيدروجينية قوية بسبب:", options: ["حجم الذرة", "فرق كهروسالبية كبير", "عدم تماثل الشكل"], correct: 1 },
+                    { id: 47, question: "قوى ثنائية القطب--ثنائي القطب أقوى عندما يكون الجزيء:", options: ["متناظرًا", "قطبيًا", "غير قطبي"], correct: 1 },
+                    { id: 48, question: "تزداد اللزوجة بزيادة:", options: ["قوى التجاذب بين الجزيئات", "الكتلة الذرية فقط", "عدد البروتونات"], correct: 0 },
+                    { id: 49, question: "السبب في ارتفاع نقطة غليان H₂O مقارنة بـ H₂S هو وجود:", options: ["روابط تساهمية", "روابط هيدروجينية", "روابط فلزية"], correct: 1 },
+                    { id: 50, question: "العناصر الانتقالية تُظهر ألوانًا بسبب انتقالات في:", options: ["المدارات s", "المدارات d", "المستوى الأول"], correct: 1 }
+                ]
+            },
+            4: { // الفصل الرابع: حالات المادة
+                easy: [
+                    { id: 51, question: "الخاصية التي يمكن ملاحظتها دون تغيير تركيب المادة هي:", options: ["الخاصية الكيميائية", "الخاصية الفيزيائية", "الخاصية النووية"], correct: 1 },
+                    { id: 52, question: "من أمثلة الخواص الفيزيائية للمادة:", options: ["القابلية للاحتراق", "اللون", "التفاعل مع الماء"], correct: 1 },
+                    { id: 53, question: "الخواص الكيميائية تتعلق بـ:", options: ["شكل المادة", "قدرة المادة على تكوين مواد جديدة", "كتلة المادة فقط"], correct: 1 },
+                    { id: 54, question: "الحالة التي تكون فيها الجسيمات متقاربة ومنظمة هي:", options: ["الغاز", "الصلب", "السائل"], correct: 1 },
+                    { id: 55, question: "الحالة التي تكون فيها الجسيمات متقاربة لكن غير منتظمة هي:", options: ["الغاز", "السائل", "الصلب"], correct: 1 }
+                ],
+                medium: [
+                    { id: 56, question: "عند مقارنة خاصية الكثافة بين مادتين فإن المادة الأعلى كثافة:", options: ["تطفو", "تغوص", "تتبخر"], correct: 1 },
+                    { id: 57, question: "السبب في اختلاف شكل السائل عن الصلب هو:", options: ["ضعف قوى التجاذب بين الجزيئات في السائل", "تغير الكتلة", "زيادة الحرارة دائمًا"], correct: 0 },
+                    { id: 58, question: "عند زيادة درجة الحرارة فإن حركة الجسيمات:", options: ["تقل", "تبقى ثابتة", "تزداد"], correct: 2 },
+                    { id: 59, question: "زيادة الضغط على الغاز يؤدي إلى:", options: ["زيادة حجمه", "نقص حجمه", "بقاء حجمه ثابتًا"], correct: 1 },
+                    { id: 60, question: "ذوبان الملح في الماء يعتبر:", options: ["تغير كيميائي", "تغير نووي", "تغير فيزيائي"], correct: 2 }
+                ],
+                hard: [
+                    { id: 61, question: "عند تحليل العلاقة بين درجة الحرارة وحركة الجسيمات نجد أن الحركة:", options: ["تقل مع الزيادة", "تزداد طرديًا", "ثابتة"], correct: 1 },
+                    { id: 62, question: "السبب في أن المواد الصلبة لها كثافة أعلى هو:", options: ["طاقتها الحركية أعلى", "جسيماتها متراصة بقوة", "عدد إلكتروناتها كبير"], correct: 1 },
+                    { id: 63, question: "يمكن تفسير الطفو باستخدام:", options: ["خاصية اللون", "مبدأ الكثافة", "درجة الغليان"], correct: 1 },
+                    { id: 64, question: "تحليل تغير اللون والرائحة في تفاعل يدل على:", options: ["تغيير حجم المادة", "حدوث تغير كيميائي", "ضعف التجاذب"], correct: 1 },
+                    { id: 65, question: "عندما تتغير خصائص المادة دون تغير تركيبها فإن:", options: ["الروابط الكيميائية تتكسر", "التغير فيزيائي", "المادة تتحلل"], correct: 1 }
+                ]
+            },
+            5: { // الفصل الخامس: التركيب الذري
+                easy: [
+                    { id: 66, question: "الإلكترون ينتقل بين مستويات الطاقة عندما:", options: ["يسخن نواة الذرة", "يكتسب أو يفقد طاقة", "يتغير عدد البروتونات"], correct: 1 },
+                    { id: 67, question: "الضوء يُعد شكلًا من أشكال:", options: ["المادة", "الإشعاع الكهرومغناطيسي", "الرائحة"], correct: 1 },
+                    { id: 68, question: "سرعة الضوء في الفراغ هي:", options: ["3×10⁸ م/ث", "3×10⁵ م/ث", "300 م/ث"], correct: 0 },
+                    { id: 69, question: "الطول الموجي يُقاس بوحدة:", options: ["المتر", "الهرتز", "الجول"], correct: 0 },
+                    { id: 70, question: "التردد يُقاس بوحدة:", options: ["متر/ثانية", "هرتز", "جول"], correct: 1 }
+                ],
+                medium: [
+                    { id: 71, question: "إذا كان تردد موجة ضوئية 6×10¹⁴ Hz، فإن الطول الموجي يقارب:", options: ["5×10⁻⁷ m", "5×10⁻³ m", "5×10² m"], correct: 0 },
+                    { id: 72, question: "عنصر عدده الذري 16، فإن التوزيع الإلكتروني لإلكترونات التكافؤ هو:", options: ["s¹", "p⁴", "d²"], correct: 1 },
+                    { id: 73, question: "إذا كان المستوى الرابع يمكنه حمل 32 إلكترون، فهذا لأن عدد المدارات فيه هو:", options: ["4", "8", "16"], correct: 1 },
+                    { id: 74, question: "إذا انتقل إلكترون من n=4 إلى n=2 فإنه:", options: ["يفقد طاقة", "يكتسب طاقة", "يصبح متعادلًا"], correct: 0 },
+                    { id: 75, question: "إذا كان طول موجة ضوء 700 nm فهذا يعني أنه:", options: ["أزرق", "أحمر", "بنفسجي"], correct: 1 }
+                ],
+                hard: [
+                    { id: 76, question: "عند انتقال إلكترون من n=5 إلى n=2 ينتج:", options: ["فوتون ذو طاقة منخفضة", "فوتون ذو طاقة عالية", "لا ينتج ضوء"], correct: 1 },
+                    { id: 77, question: "تفسير استقرار الغازات النبيلة يعتمد على:", options: ["امتلاء المدار s فقط", "اكتمال مستوى التكافؤ", "امتلاك طاقة منخفضة دائمًا"], correct: 1 },
+                    { id: 78, question: "إذا اختلف توزيع إلكترون واحد فقط بين عنصرين، فهذا يحدد:", options: ["اختلاف الكتلة", "اختلاف النشاط الكيميائي", "اختلاف النواة"], correct: 1 },
+                    { id: 79, question: "العنصر الذي يحتوي على مدار نصف ممتلئ يكون غالبًا:", options: ["أكثر استقرارًا", "أقل استقرارًا", "متعادلًا كهربائيًا فقط"], correct: 0 },
+                    { id: 80, question: "زيادة طاقة الفوتون تعتمد على:", options: ["زيادة الطول الموجي", "زيادة التردد", "زيادة الكتلة"], correct: 1 }
+                ]
+            }
+        };
+
+        // أحداث الأزرار
+        document.querySelectorAll('.start-chapter').forEach(button => {
+            button.addEventListener('click', function() {
+                currentChapter = this.getAttribute('data-chapter');
+                document.getElementById('chapters').style.display = 'none';
+                document.getElementById('levels').style.display = 'block';
+                window.scrollTo(0, 0);
+            });
+        });
+
+        document.querySelectorAll('.select-level').forEach(button => {
+            button.addEventListener('click', function() {
+                currentLevel = this.getAttribute('data-level');
+                document.getElementById('levels').style.display = 'none';
+                document.getElementById('time-selection').style.display = 'block';
+                window.scrollTo(0, 0);
+            });
+        });
+
+        document.querySelectorAll('.time-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.time-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                selectedTime = parseInt(this.getAttribute('data-time'));
+            });
+        });
+
+        document.querySelector('.start-test').addEventListener('click', function() {
+            if (!selectedTime) {
+                alert('يرجى اختيار مدة الاختبار');
+                return;
+            }
+            startTest();
+        });
+
+        // بدء الاختبار
+        function startTest() {
+            document.getElementById('time-selection').style.display = 'none';
+            document.getElementById('test-screen').style.display = 'block';
+            
+            // تحميل الأسئلة
+            currentQuestions = questionsDatabase[currentChapter][currentLevel];
+            userAnswers = {};
+            
+            // عرض الأسئلة
+            displayQuestions();
+            
+            // بدء المؤقت
+            timeLeft = selectedTime * 60;
+            startTimer();
+        }
+
+        // عرض الأسئلة
+        function displayQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            currentQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.innerHTML = `
+                    <div class="question-text">${index + 1}) ${q.question}</div>
+                    <div class="options-container">
+                        ${q.options.map((option, optIndex) => `
+                            <div class="option" data-question="${q.id}" data-option="${optIndex}">
+                                ${String.fromCharCode(1570 + optIndex)}) ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="feedback correct" style="display: none;">
+                        الإجابة الصحيحة: ${String.fromCharCode(1570 + q.correct)}) ${q.options[q.correct]}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+            
+            // إضافة أحداث للخيارات
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionId = this.getAttribute('data-question');
+                    const optionIndex = parseInt(this.getAttribute('data-option'));
+                    
+                    userAnswers[questionId] = optionIndex;
+                    
+                    // إظهار الإجابة الصحيحة
+                    const question = currentQuestions.find(q => q.id == questionId);
+                    const feedback = this.parentElement.nextElementSibling;
+                    feedback.style.display = 'block';
+                    
+                    // تلوين الإجابات
+                    this.parentElement.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('correct', 'incorrect');
+                    });
+                    
+                    if (optionIndex === question.correct) {
+                        this.classList.add('correct');
+                    } else {
+                        this.classList.add('incorrect');
+                        this.parentElement.querySelector(`.option[data-option="${question.correct}"]`).classList.add('correct');
+                    }
+                });
+            });
+        }
+
+        // المؤقت
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    endTest();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // إنهاء الاختبار
+        function endTest() {
+            clearInterval(timerInterval);
+            document.getElementById('test-screen').style.display = 'none';
+            showResults();
+        }
+
+        function submitTest() {
+            endTest();
+        }
+
+        // عرض النتائج
+        function showResults() {
+            let correct = 0;
+            currentQuestions.forEach(q => {
+                if (userAnswers[q.id] === q.correct) {
+                    correct++;
+                }
+            });
+            
+            const score = correct;
+            const total = currentQuestions.length;
+            const percentage = (correct / total) * 100;
+            
+            document.getElementById('final-score').textContent = `${score}/${total}`;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = 'ممتاز! أداء رائع';
+            } else if (percentage >= 60) {
+                message = 'جيد جداً! يمكنك التحسين';
+            } else {
+                message = 'تحتاج للمزيد من الممارسة';
+            }
+            
+            document.getElementById('result-message').textContent = message;
+            document.getElementById('results-screen').style.display = 'block';
+        }
+
+        function closeResults() {
+            document.getElementById('results-screen').style.display = 'none';
+            document.getElementById('chapters').style.display = 'block';
+            document.getElementById('levels').style.display = 'none';
+            document.getElementById('time-selection').style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        // تأثيرات الخلفية
+        function createFloatingElements() {
+            const container = document.querySelector('.floating-elements');
+            const symbols = ['🧪', '⚗️', '🔬', '🧫', '🧴', '💧', '🔥', '💨'];
+            
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.style.width = `${Math.random() * 80 + 40}px`;
+                element.style.height = element.style.width;
+                element.style.top = `${Math.random() * 100}%`;
+                element.style.right = `${Math.random() * 100}%`;
+                element.style.animationDelay = `${Math.random() * 15}s`;
+                element.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                element.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                element.style.fontSize = `${Math.random() * 20 + 10}px`;
+                element.style.display = 'flex';
+                element.style.alignItems = 'center';
+                element.style.justifyContent = 'center';
+                container.appendChild(element);
+            }
+        }
+
+        createFloatingElements();
+    </script>
+</body>
+</html>
